@@ -2,41 +2,29 @@
 
 Bexora is distributed as a standalone Windows application.
 
-No Python installation, `.env` file, external GIF directory, or additional runtime files are required for the official compiled release.
+No Python installation, `.env` file, or external asset directory is required.
 
-> **Authorized use only.**  
-> You are responsible for ensuring that you have permission to use Bexora with any Discord bot, server, account, environment, or system where it is executed.
+> Bexora is intended only for authorized use in environments, servers, accounts, and systems where you have permission to operate.
 
 ---
 
 ## Installation
 
-Bexora does not require a traditional installation.
+Download the latest official Bexora release.
 
-Download the latest official release and extract:
-
-```text
-Bexora/
-└── Bexora.exe
-```
-
-Run:
+Extract the downloaded archive and run:
 
 ```text
 Bexora.exe
 ```
 
-That is all that is required.
-
-Do not run the executable directly from inside a compressed archive. Extract it to a normal directory first.
+No additional installation is required.
 
 ---
 
 ## First Launch
 
-When Bexora is started for the first time, the application will display the bot authentication screen.
-
-Enter the token of the Discord bot you are authorized to use.
+When Bexora starts for the first time, you will be asked to connect a Discord bot.
 
 ```text
 Bexora.exe
@@ -50,330 +38,193 @@ Token validation
 Bexora
 ```
 
-Bexora validates the token before allowing access to the main interface.
-
-An invalid, revoked, expired, or otherwise rejected token will not be accepted.
+Only valid Discord bot tokens are accepted.
 
 ---
 
 ## Bot Authentication
 
-Bexora validates the supplied bot token directly against Discord before starting the main application.
+Bexora validates the supplied bot token before opening the main interface.
 
-The token is never required through a `.env` file in the official portable release.
+If the token is invalid, revoked, or no longer available, authentication will fail.
 
-Once successfully validated, the token is stored locally for the current Windows user.
+After successful authentication, the credential is stored locally for the current Windows user.
 
-On future launches, Bexora will attempt to validate the stored token automatically.
-
-If the stored token is no longer valid, Bexora will discard it and request a new token.
+Future launches will automatically validate the stored credential before opening Bexora.
 
 ---
 
-## Local Credential Storage
+## Credential Storage
 
-Bot credentials are stored locally on the computer where Bexora is used.
-
-The local Bexora configuration is stored under:
+Bexora stores its local configuration under:
 
 ```text
 %LOCALAPPDATA%\Bexora
 ```
 
-The bot token is protected using Windows user-level encryption before being stored.
+The saved bot credential is protected locally for the Windows user.
 
-This means the saved credential is associated with the Windows user that created it.
+The token is not embedded into `Bexora.exe`.
 
-Moving `Bexora.exe` to another computer does **not** transfer the saved bot token.
-
-Each user or computer must authenticate independently.
+Copying the executable to another computer does not copy the saved credential.
 
 ---
 
-## Resetting the Saved Bot Token
+## Resetting the Saved Bot
 
-To force Bexora to request a new bot token, close the application and remove the local Bexora configuration directory:
+To connect another bot, close Bexora and delete:
 
 ```text
 %LOCALAPPDATA%\Bexora
 ```
 
-You can also remove it from PowerShell:
+You can also use PowerShell:
 
 ```powershell
 Remove-Item "$env:LOCALAPPDATA\Bexora" -Recurse -Force
 ```
 
-The next time Bexora starts, the bot authentication screen will appear again.
+Bexora will request a bot token again the next time it starts.
 
 ---
 
-## Portable Release
+## Portable Application
 
-The official release is designed to operate as a standalone executable.
-
-The user only needs:
+The official Bexora release requires only:
 
 ```text
 Bexora.exe
 ```
 
-The following files are **not required** beside the executable:
+Images, GIFs, icons, and other required application resources are included inside the official build.
+
+You do not need:
 
 ```text
 .env
 nukegif/
-app.py
-bot_core.py
-requirements.txt
 Python
-Nuitka
+additional runtime files
 ```
-
-Application assets required by the official build are packaged with the executable.
 
 ---
 
-## Bundled Assets
+## Bot Token Security
 
-Images, GIFs, icons, and other required application resources are bundled into the official Bexora executable during compilation.
+Your Discord bot token is a private credential.
 
-You do not need to create, download, move, or maintain an external `nukegif` directory when using an official compiled release.
+Never publish or share it through:
 
-The source project may contain directories such as:
+- GitHub repositories
+- screenshots
+- videos
+- logs
+- issue reports
+- public ZIP files
+- Discord messages
+- support requests
 
-```text
-nukegif/
-```
-
-These directories are used during development and compilation.
-
-They are embedded into the final portable build.
+If a token is accidentally exposed, regenerate it immediately through Discord's developer settings.
 
 ---
 
 ## Internet Connection
 
-An internet connection is required for operations that communicate with Discord, including bot token validation.
+An internet connection is required for bot authentication and other Discord-related functionality.
 
-If Discord cannot be reached because of an internet connection problem, firewall restriction, service outage, DNS issue, or other network problem, Bexora may be unable to authenticate or perform Discord-related operations.
-
----
-
-## Discord Bot Token Security
-
-A Discord bot token is a private credential.
-
-Never:
-
-- publish a bot token;
-- commit a bot token to GitHub;
-- include a token in screenshots;
-- post a token in issue reports;
-- share a token through Discord messages;
-- include a token in public archives;
-- hard-code a private token into a public build;
-- send your token to another person.
-
-If a token is accidentally exposed, regenerate it immediately through the appropriate Discord developer settings.
-
-Bexora will never require a public `.env` file containing your bot token.
+Bexora may be unable to authenticate if Discord is unavailable or the current network blocks access to Discord services.
 
 ---
 
 ## Official Builds
 
-Only releases published through the official Bexora repository should be treated as official Bexora builds.
+Only releases published through the official Bexora repository should be considered official.
 
-A release obtained from another source may have been:
+Executables obtained from unknown mirrors, reuploads, unofficial repositories, or third-party download pages may have been modified.
 
-- modified;
-- repackaged;
-- patched;
-- bundled with additional software;
-- renamed;
-- altered after publication.
-
-Its integrity therefore cannot be guaranteed by the Bexora project.
-
-When cryptographic hashes are provided with a release, compare the downloaded executable against the published hash before running it.
+Modified or repackaged builds are not supported.
 
 ---
 
-## Windows Security Warnings
-
-Bexora is distributed as a compiled Windows executable.
+## Windows Security
 
 Windows SmartScreen or Microsoft Defender may display a warning for newly published executables that do not yet have established reputation or a recognized code-signing certificate.
 
-A SmartScreen warning alone does not indicate that the application failed to compile correctly.
-
-Always download Bexora from the official release source and verify published hashes when available.
-
----
-
-## Do Not Modify the Official Release
-
-The official Bexora release is distributed in its compiled form.
-
-Do not:
-
-- patch or modify `Bexora.exe`;
-- remove or bypass application restrictions;
-- redistribute altered builds as official Bexora releases;
-- impersonate the original project or author;
-- bundle Bexora with unknown executables, loaders, or injectors;
-- distribute private source code obtained without authorization.
-
-Modified or unofficial builds are not supported and may behave differently from the official release.
-
-Support requests involving altered binaries or unofficial packages may be rejected.
-
----
-
-## Reverse Engineering and Integrity
-
-Bexora is distributed as a compiled executable to provide a consistent release and protect the original source distribution.
-
-Reverse engineering, decompilation, unpacking, patching, redistribution, or source reconstruction may be restricted by the project terms and applicable law.
-
-Modified executables must not be presented as official Bexora releases.
-
-Future releases may publish hashes, signatures, or other integrity information to help users distinguish official artifacts from modified copies.
-
-Bexora does not claim to automatically identify or track individuals attempting to inspect or modify the executable unless such functionality is explicitly implemented and disclosed in that version.
-
----
-
-## Modified Builds
-
-If you create a modified version of Bexora where permitted, it must be clearly identified as an unofficial modification.
-
-Do not represent a modified build as an original release from Bexora or its author.
-
-The author is not responsible for issues caused by:
-
-- third-party modifications;
-- repackaged executables;
-- injected code;
-- altered assets;
-- unofficial distributions;
-- modified dependencies;
-- unauthorized builds.
+Always download Bexora from the official repository.
 
 ---
 
 ## Troubleshooting
 
-### Bexora asks for the bot token again
+### Bexora asks for the token again
 
-The previously stored token may have been:
-
-- revoked;
-- regenerated;
-- invalidated;
-- removed from local storage;
-- created under another Windows user.
+The previously stored token may have been revoked, regenerated, deleted, or invalidated.
 
 Enter a valid token again.
 
----
+### The token is rejected
 
-### Bexora cannot validate the token
-
-Check that:
-
-- the token is correct;
-- the bot still exists;
-- the token has not been regenerated;
-- the computer has internet access;
-- Discord is reachable from the current network.
-
----
-
-### The application does not start
-
-Make sure the executable was fully extracted from the downloaded archive before running it.
-
-Recommended:
+Verify that:
 
 ```text
-Downloads/
-└── Bexora/
-    └── Bexora.exe
+the token is correct
+the bot still exists
+the token has not been regenerated
+Discord is reachable
+your internet connection is working
 ```
-
-Avoid running it directly from inside `.zip`, `.rar`, or temporary archive directories.
-
----
 
 ### Images or GIFs are missing
 
-Official portable builds contain the required assets internally.
+Official standalone builds contain the required application assets internally.
 
-If an official release reports missing bundled resources, verify that you are running the original release artifact and not an altered or incomplete build.
+Make sure you are running an original official Bexora release.
+
+### Bexora does not start
+
+Make sure the executable was fully extracted before running it.
+
+Do not run Bexora directly from inside a `.zip` or `.rar` archive.
 
 ---
 
-## Development
-
-The source version of Bexora may require Python and additional dependencies.
-
-Example development structure:
+## Compatibility
 
 ```text
-Bexora/
-├── app.py
-├── bot_core.py
-├── bexora.ico
-├── requirements.txt
-└── nukegif/
+Operating System: Windows
+Architecture: 64-bit
+Distribution: Standalone executable
+Configuration: Built-in bot authentication
 ```
-
-Development files are not required by users of the official portable build.
 
 ---
 
-## Building
+## Usage Notice
 
-Official Windows builds are compiled as standalone executables.
+Bexora is intended for authorized use only.
 
-Example Nuitka build:
-
-```powershell
-python -m nuitka app.py --mode=onefile --windows-console-mode=disable --windows-icon-from-ico=bexora.ico --include-data-files=bexora.ico=bexora.ico --include-data-dir=nukegif=nukegif --enable-plugin=tk-inter --output-filename=Bexora.exe --assume-yes-for-downloads
-```
-
-The resulting release artifact is:
-
-```text
-Bexora.exe
-```
-
-Build directories generated by Nuitka are development artifacts and are not required for distribution.
+You are responsible for ensuring that you have permission to use the application with any Discord bot, server, account, environment, system, or service where it is executed.
 
 ---
 
-## Security
+## Support
 
-Use Bexora only with bots, servers, systems, and environments where you have explicit authorization.
+Support applies only to official Bexora releases.
 
-Do not download Bexora from unknown mirrors or third-party download pages.
-
-Do not share your Discord bot token with other people.
-
-Do not place private credentials inside public repositories or release archives.
-
-Keep Discord bot permissions limited to what the bot actually requires.
+When requesting support, never include your real Discord bot token.
 
 ---
 
 ## Copyright
 
-Copyright © 2026 bejj0taa.
+Copyright © 2026 **bejj0taa**
 
 All rights reserved.
 
 Bexora and its official release materials may not be represented as another person's original work.
 
-Unauthorized redistribution, modification, source reconstruction, or commercial redistribution may be prohibited except where applicable law provides otherwise.
+Modified builds must not be presented as official Bexora releases.
+
+---
+
+**Official Repository:** `bejj0taa/Bexora`
